@@ -1,0 +1,10 @@
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\bin\Debug\netcoreapp2.0\DojoMyMusic.deps.json
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\bin\Debug\netcoreapp2.0\DojoMyMusic.runtimeconfig.json
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\bin\Debug\netcoreapp2.0\DojoMyMusic.runtimeconfig.dev.json
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\bin\Debug\netcoreapp2.0\DojoMyMusic.dll
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\bin\Debug\netcoreapp2.0\DojoMyMusic.pdb
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\obj\Debug\netcoreapp2.0\DojoMyMusic.csproj.CoreCompileInputs.cache
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\obj\Debug\netcoreapp2.0\DojoMyMusic.AssemblyInfoInputs.cache
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\obj\Debug\netcoreapp2.0\DojoMyMusic.AssemblyInfo.cs
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\obj\Debug\netcoreapp2.0\DojoMyMusic.dll
+C:\Users\tanat\OneDrive\projects\DojoMyMusic\obj\Debug\netcoreapp2.0\DojoMyMusic.pdb
