@@ -12657,11 +12657,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\tanat\\OneDrive\\projects\\DojoMyMusic\\DojoMyMusic.csproj",
+      "projectUniqueName": "C:\\Users\\tanat\\projects\\DojoMyMusic\\DojoMyMusic.csproj",
       "projectName": "DojoMyMusic",
-      "projectPath": "C:\\Users\\tanat\\OneDrive\\projects\\DojoMyMusic\\DojoMyMusic.csproj",
+      "projectPath": "C:\\Users\\tanat\\projects\\DojoMyMusic\\DojoMyMusic.csproj",
       "packagesPath": "C:\\Users\\tanat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\tanat\\OneDrive\\projects\\DojoMyMusic\\obj\\",
+      "outputPath": "C:\\Users\\tanat\\projects\\DojoMyMusic\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

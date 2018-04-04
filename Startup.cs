@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace DojoMyMusic
@@ -26,7 +27,25 @@ namespace DojoMyMusic
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddCors(options =>
+                options.AddPolicy("CorsPolicy", p =>
+                    p.AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowCredentials()));
+
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+            })
+            .AddJsonOptions(options =>
+            {
+
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+                options.SerializerSettings.DateFormatString = "yyyy-MM-ddThh:mm:ss-03:00";
+
+            }); ;
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -43,6 +62,8 @@ namespace DojoMyMusic
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("CorsPolicy");
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
