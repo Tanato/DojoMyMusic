@@ -2,40 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DojoMyMusic.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DojoMyMusic.Controllers
 {
     [Route("api/[controller]")]
     public class MusicasController : Controller
     {
+        private readonly ApplicationDbContext db;
+        public MusicasController(ApplicationDbContext db)
+        {
+            this.db = db;
+        }
+
         [HttpGet("{filter}")]
         public IEnumerable<Musica> Get(string filter)
         {
-            var artistaGuid = Guid.NewGuid();
+            var result = db.Musicas.Include(x => x.Artista);
 
-            var result = new List<Musica>();
-            result.Add(new Musica
-            {
-                Id = Guid.NewGuid(),
-                Nome = "Two Minutes to Midnigth",
-                ArtistaId = artistaGuid,
-                Artista = new Artista { Id = artistaGuid, Nome = "Iron Maiden" }
-            });
-            result.Add(new Musica
-            {
-                Id = Guid.NewGuid(),
-                Nome = "Aces High",
-                ArtistaId = artistaGuid,
-                Artista = new Artista { Id = artistaGuid, Nome = "Iron Maiden" }
-            });
-            result.Add(new Musica
-            {
-                Id = Guid.NewGuid(),
-                Nome = "Fear of the Dark",
-                ArtistaId = artistaGuid,
-                Artista = new Artista { Id = artistaGuid, Nome = "Iron Maiden" }
-            });
             return result.Where(x => x.Nome.Contains(filter) || x.Artista.Nome.Contains(filter));
         }
     }

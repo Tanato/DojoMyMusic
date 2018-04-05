@@ -19,6 +19,9 @@ namespace DojoMyMusic.Models
             modelBuilder.Entity<Musica>().ToTable("Musicas");
             modelBuilder.Entity<Playlist>().ToTable("Playlists");
             modelBuilder.Entity<Usuario>().ToTable("Usuarios");
+
+            modelBuilder.Entity<PlaylistMusica>()
+                .HasKey(pm => new { pm.PlaylistId, pm.MusicaId });
         }
     }
 }

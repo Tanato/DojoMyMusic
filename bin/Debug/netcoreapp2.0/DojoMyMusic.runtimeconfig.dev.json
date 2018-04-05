@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\tanat\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\tanat\\.nuget\\packages",
+      "C:\\Users\\tanato\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\tanato\\.nuget\\packages",
       "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
     ]
   }

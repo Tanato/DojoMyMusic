@@ -47,7 +47,7 @@ namespace DojoMyMusic
 
             }); ;
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=path"));
 
             services.AddSwaggerGen(c =>
             {
@@ -64,12 +64,6 @@ namespace DojoMyMusic
             }
 
             app.UseCors("CorsPolicy");
-
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                context.Database.Migrate();
-            }
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

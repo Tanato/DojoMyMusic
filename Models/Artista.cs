@@ -1,9 +1,9 @@
 using System;
 
-namespace DojoMyMusic
+namespace DojoMyMusic.Models
 {
-    public class Artista{
-
+    public class Artista
+    {
         public Guid Id { get; set; }
         public string Nome { get; set; }
     }
