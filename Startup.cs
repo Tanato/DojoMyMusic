@@ -47,7 +47,7 @@ namespace DojoMyMusic
 
             }); ;
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=path"));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSwaggerGen(c =>
             {

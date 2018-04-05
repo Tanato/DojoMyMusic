@@ -20,9 +20,12 @@ namespace DojoMyMusic.Controllers
         [HttpGet("{filter}")]
         public IEnumerable<Musica> Get(string filter)
         {
-            var result = db.Musicas.Include(x => x.Artista);
+            var result = db.Musicas.Include(x => x.Artista)
+                .Where(x => x.Nome.Contains(filter) || x.Artista.Nome.Contains(filter))
+                .OrderBy(x => x.Artista.Nome).ThenBy(x => x.Nome)
+                .ToList();
 
-            return result.Where(x => x.Nome.Contains(filter) || x.Artista.Nome.Contains(filter));
+            return result;
         }
     }
 }
