@@ -12,43 +12,50 @@ using Newtonsoft.Json;
 namespace DojoMyMusic.Controllers
 {
     [Route("api/[controller]")]
-    public class MusicasController : Controller
+    public class MusicaController : Controller
     {
         private readonly ApplicationDbContext db;
         private readonly IDistributedCache cache;
-        public MusicasController(ApplicationDbContext db,
+        public MusicaController(ApplicationDbContext db,
            IDistributedCache cache)
         {
             this.db = db;
             this.cache = cache;
         }
 
-        [HttpGet("{filter}")]
+        [HttpGet("{filtro}")]
         [ProducesResponseType(typeof(IEnumerable<Musica>), 200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> Get(string filter)
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> Get(string filtro)
         {
-            if (filter.Length < 3)
+            if (filtro.Length < 3)
                 return BadRequest("Favor invormar mais de 3 caracteres!");
 
-            return Ok(await db.Musicas.Include(x => x.Artista)
-            .Where(x => x.Nome.Contains(filter) || x.Artista.Nome.Contains(filter))
-            .OrderBy(x => x.Artista.Nome).ThenBy(x => x.Nome)
-            .ToListAsync());
+            var result = await db.Musicas.Include(x => x.Artista)
+                        .Where(x => x.Nome.Contains(filtro) || x.Artista.Nome.Contains(filtro))
+                        .OrderBy(x => x.Artista.Nome).ThenBy(x => x.Nome)
+                        .ToListAsync();
+
+            if (result == null)
+                return NoContent();
+            else
+                return Ok(result);
         }
 
         // Método com cache no Redis
-        [HttpGet("Cached/{filter}")]
+        [HttpGet("Cached/{filtro}")]
         [ProducesResponseType(typeof(IEnumerable<Musica>), 200)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetCached(string filter)
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> GetCached(string filtro)
         {
-            if (filter.Length < 3)
+            if (filtro.Length < 3)
                 return BadRequest("Favor invormar mais de 3 caracteres!");
 
             IEnumerable<Musica> result;
 
-            var value = await this.cache.GetAsync(filter);
+            var value = await this.cache.GetAsync(filtro);
             if (value != null)
             {
                 result = JsonConvert.DeserializeObject<IEnumerable<Musica>>(Encoding.ASCII.GetString(value));
@@ -56,15 +63,18 @@ namespace DojoMyMusic.Controllers
             else
             {
                 result = await db.Musicas.Include(x => x.Artista)
-                .Where(x => x.Nome.Contains(filter) || x.Artista.Nome.Contains(filter))
+                .Where(x => x.Nome.Contains(filtro) || x.Artista.Nome.Contains(filtro))
                 .OrderBy(x => x.Artista.Nome).ThenBy(x => x.Nome)
                 .ToListAsync();
 
                 var cacheEntryOptions = new DistributedCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(10));
-                await this.cache.SetAsync(filter, Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(result)), cacheEntryOptions);
+                await this.cache.SetAsync(filtro, Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(result)), cacheEntryOptions);
             }
 
-            return Ok(result);
+            if (result == null)
+                return NoContent();
+            else
+                return Ok(result);
         }
     }
 }
