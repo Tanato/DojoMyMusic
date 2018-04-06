@@ -37,15 +37,12 @@ namespace DojoMyMusic
             services.AddMvc(options =>
             {
                 options.RespectBrowserAcceptHeader = true;
-            })
-            .AddJsonOptions(options =>
+            });
+
+            services.AddDistributedRedisCache(options =>
             {
-
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
-                options.SerializerSettings.DateFormatString = "yyyy-MM-ddThh:mm:ss-03:00";
-
-            }); ;
+                options.Configuration = "localhost:6379";
+            });
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -72,7 +69,7 @@ namespace DojoMyMusic
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty;
+                c.RoutePrefix = "developer";
             });
 
             app.UseMvc();

@@ -9,6 +9,5 @@ namespace DojoMyMusic.Models
         public string Nome { get; set; }
         public Guid ArtistaId { get; set; }
         public Artista Artista { get; set; }
-        public ICollection<PlaylistMusica> PlaylistMusicas { get; set; }
     }
 }
