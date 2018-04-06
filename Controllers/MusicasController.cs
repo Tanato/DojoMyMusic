@@ -24,29 +24,27 @@ namespace DojoMyMusic.Controllers
         }
 
         [HttpGet("{filter}")]
-        public async Task<IEnumerable<Musica>> Get(string filter)
+        [ProducesResponseType(typeof(IEnumerable<Musica>), 200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> Get(string filter)
         {
             if (filter.Length < 3)
-            {
-                StatusCode(400);
-                return null;
-            }
+                return BadRequest("Favor invormar mais de 3 caracteres!");
 
-            return await db.Musicas.Include(x => x.Artista)
+            return Ok(await db.Musicas.Include(x => x.Artista)
             .Where(x => x.Nome.Contains(filter) || x.Artista.Nome.Contains(filter))
             .OrderBy(x => x.Artista.Nome).ThenBy(x => x.Nome)
-            .ToListAsync();
+            .ToListAsync());
         }
 
         // Método com cache no Redis
         [HttpGet("Cached/{filter}")]
-        public async Task<IEnumerable<Musica>> GetCached(string filter)
+        [ProducesResponseType(typeof(IEnumerable<Musica>), 200)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> GetCached(string filter)
         {
             if (filter.Length < 3)
-            {
-                StatusCode(400);
-                return null;
-            }
+                return BadRequest("Favor invormar mais de 3 caracteres!");
 
             IEnumerable<Musica> result;
 
@@ -66,7 +64,7 @@ namespace DojoMyMusic.Controllers
                 await this.cache.SetAsync(filter, Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(result)), cacheEntryOptions);
             }
 
-            return result;
+            return Ok(result);
         }
     }
 }

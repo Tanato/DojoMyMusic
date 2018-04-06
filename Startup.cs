@@ -69,7 +69,7 @@ namespace DojoMyMusic
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = "developer";
+                c.RoutePrefix = String.Empty;
             });
 
             app.UseMvc();
